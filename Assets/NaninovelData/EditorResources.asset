@@ -144,3 +144,10 @@ MonoBehaviour:
     - name: ScriptNavigatorUI
       pathPrefix: UI
       guid: 735d6aa767879aa469134858c5b2f0a7
+  - Id: Scripts
+    Resources:
+    - name: NewScript
+      pathPrefix: Scripts
+      guid: 289b41459bfaf7c47980ffe40d2eb21a
+  - Id: Characters/bc28ad88-01a4-46a4-b88e-0335305c599f
+    Resources: []

@@ -1,0 +1,16 @@
+; Введение и стартовый диалог
+@char NpcA "Привет! Хочешь помочь мне с одним делом? Обещаю вознаграждение!"
+@choice "Согласиться помочь" -> AcceptHelp
+@choice "Отказаться" -> DeclineHelp
+
+# AcceptHelp
+@addScore 10
+@char NpcA "Отлично, вот твои первые 10 очков!"
+@checkScore minScore:10 var:hasEnoughScore
+
+; В зависимости от очков игрока мы можем определить финал
+@if hasEnoughScore == "true"
+    @char NpcA "Ты справился! Вот твоя награда!"
+@else
+    @char NpcA "Не хватает очков. Попробуй еще раз!"
+@endif
