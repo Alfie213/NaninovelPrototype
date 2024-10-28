@@ -5,7 +5,7 @@ NpcA: Привет! Хочешь помочь мне с одним делом? �
 @stop
 
 # AcceptHelp
-@addScore 10
+@addScore amount:10
 NpcA: Отлично, вот твои первые 10 очков!
 @checkScore minScore:10 var:hasEnoughScore
 

@@ -8,17 +8,14 @@ namespace MyGame.NaninovelCommands
     public class AddScoreCommand : Command
     {
         [ParameterAlias("amount"), ParameterDefaultValue("1")]
-        public IntegerParameter ScoreAmount;
+        public StringParameter ScoreAmount;
 
         public override UniTask ExecuteAsync(AsyncToken asyncToken = default)
         {
-            Debug.Log("VAR");
-            Debug.Log(ScoreAmount);
-            if (ScoreAmount.HasValue)
-            {
-                ScoreService.Instance.AddScore(ScoreAmount.Value);
-                Debug.Log(ScoreService.Instance.CurrentScore);
-            }
+            int scoreValue = ScoreAmount.HasValue ? int.Parse(ScoreAmount.Value) : 1;
+            Debug.Log($"Adding score: {scoreValue}");
+            ScoreService.Instance.AddScore(scoreValue);
+            Debug.Log($"Current score: {ScoreService.Instance.CurrentScore}");
             return UniTask.CompletedTask;
         }
     }

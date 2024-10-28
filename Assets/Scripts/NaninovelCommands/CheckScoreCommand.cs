@@ -7,14 +7,15 @@ namespace MyGame.NaninovelCommands
     public class CheckScoreCommand : Command
     {
         [ParameterAlias("minScore"), ParameterDefaultValue("0")]
-        public IntegerParameter MinScore;
+        public StringParameter MinScore;
 
         [ParameterAlias("var")]
         public StringParameter ResultVariable;
 
         public override UniTask ExecuteAsync(AsyncToken asyncToken = default)
         {
-            bool hasEnoughScore = ScoreService.Instance.CurrentScore >= MinScore;
+            int minScoreValue = MinScore.HasValue ? int.Parse(MinScore.Value) : 0;
+            bool hasEnoughScore = ScoreService.Instance.CurrentScore >= minScoreValue;
 
             if (!string.IsNullOrEmpty(ResultVariable))
             {
