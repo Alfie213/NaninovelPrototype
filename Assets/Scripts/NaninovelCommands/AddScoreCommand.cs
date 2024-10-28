@@ -1,5 +1,6 @@
 using Naninovel;
 using MyGame.Services;
+using UnityEngine;
 
 namespace MyGame.NaninovelCommands
 {
@@ -11,9 +12,12 @@ namespace MyGame.NaninovelCommands
 
         public override UniTask ExecuteAsync(AsyncToken asyncToken = default)
         {
+            Debug.Log("VAR");
+            Debug.Log(ScoreAmount);
             if (ScoreAmount.HasValue)
             {
                 ScoreService.Instance.AddScore(ScoreAmount.Value);
+                Debug.Log(ScoreService.Instance.CurrentScore);
             }
             return UniTask.CompletedTask;
         }
