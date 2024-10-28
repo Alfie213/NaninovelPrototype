@@ -1,5 +1,6 @@
 using Naninovel;
 using MyGame.Services;
+using UnityEngine;
 
 namespace MyGame.NaninovelCommands
 {

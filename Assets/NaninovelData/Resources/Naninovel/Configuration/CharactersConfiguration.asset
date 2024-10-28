@@ -65,7 +65,7 @@ MonoBehaviour:
     Poses: []
   Metadata:
     ids:
-    - NPC-A
+    - NpcA
     metas:
     - Implementation: Naninovel.SpriteCharacter, Elringus.Naninovel.Runtime, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
