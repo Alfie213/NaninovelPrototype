@@ -1,0 +1,44 @@
+; Введение и стартовый диалог
+@back autumn
+NpcA: Привет! Хочешь помочь мне с одним делом? Обещаю вознаграждение!
+@choice Согласиться помочь -> goto:.AcceptHelp
+@choice Отказаться -> goto:.DeclineHelp
+@stop
+
+# AcceptHelp
+@addScore 10
+NpcA: Отлично, вот твои первые 10 очков!
+@goto .ContinueAfterHelp
+
+# DeclineHelp
+NpcA: Жаль... Но ты все равно идешь дальше!
+
+# ContinueAfterHelp
+; В зависимости от очков игрока мы можем определить финал
+@checkScore 10 var:hasEnoughScore
+@if hasEnoughScore == "true"
+    NpcA: У тебя достаточно очков!
+@else
+    NpcA: Не хватает очков!
+@endif
+
+@back rivermountain
+NpcB: А вот и мини-игра!
+
+; Запуск мини-игры
+@matchGame
+
+; Действие после завершения мини-игры
+@back autumn
+@addScore 20
+NpcA: Поздравляю! Ты прошел мини-игру и заслужил еще награду 20 очков!
+
+@checkScore 30 var:hasEnoughScore
+@if hasEnoughScore == "true"
+    NpcA: У тебя полно очков!
+@else
+    NpcA: Не хватает очков! Нужно было соглашаться на помощь.
+@endif
+
+@resetScore
+@title
