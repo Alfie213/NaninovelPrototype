@@ -9,7 +9,7 @@ namespace MyGame.Services
 
         public event Action<int> OnScoreUpdated;
 
-        private int _currentScore;
+        private int currentScore;
 
         private void Awake()
         {
@@ -24,18 +24,18 @@ namespace MyGame.Services
             }
         }
 
-        public int CurrentScore => _currentScore;
+        public int CurrentScore => currentScore;
 
         public void AddScore(int amount)
         {
-            _currentScore += amount;
-            OnScoreUpdated?.Invoke(_currentScore);
+            currentScore += amount;
+            OnScoreUpdated?.Invoke(currentScore);
         }
 
         public void ResetScore()
         {
-            _currentScore = 0;
-            OnScoreUpdated?.Invoke(_currentScore);
+            currentScore = 0;
+            OnScoreUpdated?.Invoke(currentScore);
         }
     }
 }
