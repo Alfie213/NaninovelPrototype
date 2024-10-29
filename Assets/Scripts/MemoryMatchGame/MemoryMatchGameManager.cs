@@ -35,25 +35,25 @@ namespace MemoryMatchGame
             int totalCards = rows * columns;
             var cardTypes = new List<CardType>();
 
-            // Создаем пары карт и одну уникальную карту, если totalCards нечетное
+            // Create card pairs and one unique card if totalCards is odd
             for (int i = 0; i < totalCards / 2; i++)
             {
                 CardType cardType = (CardType)(i % System.Enum.GetValues(typeof(CardType)).Length);
                 cardTypes.Add(cardType);
-                cardTypes.Add(cardType); // Добавляем дважды для пары
+                cardTypes.Add(cardType); // Add twice to create a pair
             }
 
-            // Если нечетное количество карт, добавляем одну уникальную карту
+            // If the number of cards is odd, add a unique card
             if (totalCards % 2 != 0)
             {
                 CardType uniqueType = (CardType)((totalCards / 2) % System.Enum.GetValues(typeof(CardType)).Length);
                 cardTypes.Add(uniqueType);
             }
 
-            // Перемешиваем типы карт
+            // Shuffle the card types
             cardTypes = cardTypes.OrderBy(c => Random.value).ToList();
 
-            // Создаем карты с назначенными типами
+            // Create cards with assigned types
             foreach (var cardType in cardTypes)
             {
                 var card = Instantiate(cardPrefab, gridParent);
@@ -62,7 +62,7 @@ namespace MemoryMatchGame
                 card.name = $"Card_{cardType}";
                 cards.Add(card.GetComponent<Card>());
 
-                // Подписка на событие нажатия карты
+                // Subscribe to the card click event
                 var button = card.GetComponent<Button>();
                 if (button != null)
                     button.onClick.AddListener(() => OnCardClicked(card.GetComponent<Card>()));
@@ -106,14 +106,14 @@ namespace MemoryMatchGame
                 firstCard = clickedCard;
                 firstCard.FlipCard();
             }
-            else if (secondCard == null && clickedCard != firstCard) // Не допускаем повторного выбора первой карты
+            else if (secondCard == null && clickedCard != firstCard) // Prevent re-selecting the first card
             {
                 secondCard = clickedCard;
                 secondCard.FlipCard();
 
                 if (firstCard.CardType == secondCard.CardType)
                 {
-                    Debug.Log($"Пара найдена: {firstCard.CardType}");
+                    Debug.Log($"Pair found: {firstCard.CardType}");
                     DisableCardButtons(firstCard);
                     DisableCardButtons(secondCard);
                     
@@ -122,7 +122,7 @@ namespace MemoryMatchGame
                 }
                 else
                 {
-                    Debug.Log("Не совпадает, закрываем карты...");
+                    Debug.Log("No match, flipping cards back...");
                     Invoke("UnflipSelectedCards", 1f);
                 }
             }
@@ -149,13 +149,13 @@ namespace MemoryMatchGame
 
         private void CheckForCompletion()
         {
-            // Проверка, что либо все пары найдены, либо осталась одна активная карта (если количество карт нечетное)
+            // Check if all pairs are found or one card remains active (if odd number of cards)
             int activeCards = cards.Count(card => !card.IsFlipped);
 
             if (activeCards == 0 || (activeCards == 1 && cards.Count % 2 != 0))
             {
-                Debug.Log("Поздравляем, вы нашли все пары!");
-                resultText.text = "Поздравляем, вы нашли все пары!";
+                Debug.Log("Congratulations, you've found all pairs!");
+                resultText.text = "Congratulations, you've found all pairs!";
             }
         }
     }
