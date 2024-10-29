@@ -8,7 +8,7 @@ namespace MemoryMatchGame
 {
     public class MemoryMatchGameManager : MonoBehaviour
     {
-        [SerializeField] private Card cardPrefab;
+        [SerializeField] private GameObject cardPrefab;
         [SerializeField] private Transform gridParent;
         [SerializeField] private int rows = 3;
         [SerializeField] private int columns = 3;
@@ -58,14 +58,14 @@ namespace MemoryMatchGame
             {
                 var card = Instantiate(cardPrefab, gridParent);
                 
-                card.Initialize(cardType, backSprite, GetSpriteForCardType(cardType));
+                card.GetComponent<Card>().Initialize(cardType, backSprite, GetSpriteForCardType(cardType));
                 card.name = $"Card_{cardType}";
-                cards.Add(card);
+                cards.Add(card.GetComponent<Card>());
 
                 // Подписка на событие нажатия карты
                 var button = card.GetComponent<Button>();
                 if (button != null)
-                    button.onClick.AddListener(() => OnCardClicked(card));
+                    button.onClick.AddListener(() => OnCardClicked(card.GetComponent<Card>()));
             }
         }
 
