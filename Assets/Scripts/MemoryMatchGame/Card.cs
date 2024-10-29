@@ -18,13 +18,13 @@ namespace MemoryMatchGame
         [SerializeField] private Sprite backSprite;
         [SerializeField] private Sprite frontSprite;
 
-        private Image _cardImage;
-        
-        private bool isFlipped;
+        public bool IsFlipped { get; private set; }
 
+        private Image cardImage;
+        
         private void Awake()
         {
-            _cardImage = GetComponent<Image>();
+            cardImage = GetComponent<Image>();
         }
 
         private void Start()
@@ -34,21 +34,21 @@ namespace MemoryMatchGame
 
         public void OnCardClicked()
         {
-            if (isFlipped) return;
+            if (IsFlipped) return;
 
             FlipCard();
         }
 
-        private void FlipCard()
+        public void FlipCard()
         {
-            isFlipped = true;
-            _cardImage.sprite = frontSprite;
+            IsFlipped = true;
+            cardImage.sprite = frontSprite;
         }
 
         public void UnflipCard()
         {
-            isFlipped = false;
-            _cardImage.sprite = backSprite;
+            IsFlipped = false;
+            cardImage.sprite = backSprite;
         }
     }
 }
