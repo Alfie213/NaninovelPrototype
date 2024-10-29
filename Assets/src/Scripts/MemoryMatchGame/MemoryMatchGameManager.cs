@@ -28,6 +28,13 @@ namespace MemoryMatchGame
 
         public void StartGame()
         {
+            cards.Clear();
+            firstCard = null;
+            secondCard = null;
+            
+            foreach (Transform child in gridParent)
+                Destroy(child.gameObject);
+            
             GenerateAndShuffleCards();
             SetupGridLayout();
         }
