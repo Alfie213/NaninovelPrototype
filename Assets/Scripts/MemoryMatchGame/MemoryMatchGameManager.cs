@@ -14,7 +14,8 @@ namespace MemoryMatchGame
         [SerializeField] private int columns = 3;
         [SerializeField] private TextMeshProUGUI resultText;
 
-        [Header("Card Images")]
+        [Header("Card Sprites")]
+        [SerializeField] private Sprite unknownSprite;
         [SerializeField] private Sprite backSprite;
         [SerializeField] private Sprite cowSprite;
         [SerializeField] private Sprite chickenSprite;
@@ -56,7 +57,8 @@ namespace MemoryMatchGame
             foreach (var cardType in cardTypes)
             {
                 var card = Instantiate(cardPrefab, gridParent);
-                card.CardType = cardType;
+                
+                card.Initialize(cardType, backSprite, GetSpriteForCardType(cardType));
                 card.name = $"Card_{cardType}";
                 cards.Add(card);
 
@@ -78,7 +80,7 @@ namespace MemoryMatchGame
                 case CardType.Bull:
                     return bullSprite;
                 default:
-                    return null;
+                    return unknownSprite;
             }
         }
 
@@ -121,7 +123,7 @@ namespace MemoryMatchGame
                 else
                 {
                     Debug.Log("Не совпадает, закрываем карты...");
-                    UnflipSelectedCards();
+                    Invoke("UnflipSelectedCards", 1f);
                 }
             }
         }
@@ -148,10 +150,12 @@ namespace MemoryMatchGame
         private void CheckForCompletion()
         {
             // Проверка, что либо все пары найдены, либо осталась одна активная карта (если количество карт нечетное)
-            int activeCards = cards.Count(card => card.GetComponent<Button>().interactable);
+            int activeCards = cards.Count(card => !card.IsFlipped);
 
+            Debug.Log(activeCards);
             if (activeCards == 0 || (activeCards == 1 && cards.Count % 2 != 0))
             {
+                Debug.Log("Поздравляем, вы нашли все пары!");
                 resultText.text = "Поздравляем, вы нашли все пары!";
             }
         }

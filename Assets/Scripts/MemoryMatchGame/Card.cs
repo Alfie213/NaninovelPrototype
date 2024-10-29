@@ -13,19 +13,21 @@ namespace MemoryMatchGame
     public class Card : MonoBehaviour
     {
         public CardType CardType { get; private set; }
+        public bool IsFlipped { get; private set; }
         
         private Sprite backSprite;
         private Sprite frontSprite;
         
         private Image cardImage;
         
-        private bool isFlipped;
 
         public void Initialize(CardType cardType, Sprite backSprite, Sprite frontSprite)
         {
             this.CardType = cardType;
             this.backSprite = backSprite;
             this.frontSprite = frontSprite;
+
+            cardImage.sprite = this.backSprite;
         }
         
         private void Awake()
@@ -35,14 +37,14 @@ namespace MemoryMatchGame
 
         public void FlipCard()
         {
-            isFlipped = true;
-            cardImage.sprite = backSprite;
+            IsFlipped = true;
+            cardImage.sprite = frontSprite;
         }
 
         public void UnflipCard()
         {
-            isFlipped = false;
-            cardImage.sprite = frontSprite;
+            IsFlipped = false;
+            cardImage.sprite = backSprite;
         }
     }
 }
