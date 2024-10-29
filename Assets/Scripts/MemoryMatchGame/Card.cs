@@ -4,16 +4,32 @@ using UnityEngine.UI;
 
 namespace MemoryMatchGame
 {
+    public enum CardType
+    {
+        Cow,
+        Chicken,
+        Bull
+    }
+    
     public class Card : MonoBehaviour
     {
-        public Image cardImage;
-        public int cardID;
+        public CardType cardType;
+        
+        [SerializeField] private Sprite backSprite;
+        [SerializeField] private Sprite frontSprite;
 
-        private bool isFlipped = false;
+        private Image _cardImage;
+        
+        private bool isFlipped;
+
+        private void Awake()
+        {
+            _cardImage = GetComponent<Image>();
+        }
 
         private void Start()
         {
-            gameObject.GetComponentInChildren<TextMeshProUGUI>().text = cardID.ToString();
+            gameObject.GetComponentInChildren<TextMeshProUGUI>().text = cardType.ToString();
         }
 
         public void OnCardClicked()
@@ -23,16 +39,16 @@ namespace MemoryMatchGame
             FlipCard();
         }
 
-        public void FlipCard()
+        private void FlipCard()
         {
             isFlipped = true;
-            cardImage.enabled = true;
+            _cardImage.sprite = frontSprite;
         }
 
         public void UnflipCard()
         {
             isFlipped = false;
-            cardImage.enabled = false;
+            _cardImage.sprite = backSprite;
         }
     }
 }

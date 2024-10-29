@@ -6,29 +6,30 @@ namespace MemoryMatchGame
 {
     public class MemoryMatchGameManager : MonoBehaviour
     {
-        public Card cardPrefab;
-        public Transform gridParent;
-        private List<Card> cards = new List<Card>();
+        [SerializeField] private Card cardPrefab;
+        [SerializeField] private Transform gridParent;
+        
+        private readonly List<Card> cards = new();
         private Card firstCard, secondCard;
 
-        void Start()
+        private void Start()
         {
             GenerateCards();
             ShuffleCards();
             CreateCardObjects();
         }
 
-        void GenerateCards()
+        private void GenerateCards()
         {
             for (int i = 0; i < 9; i++)
             {
                 Card card = Instantiate(cardPrefab);
-                card.cardID = i % 5;
+                card.cardType = i % 5;
                 cards.Add(card);
             }
         }
 
-        void ShuffleCards()
+        private void ShuffleCards()
         {
             for (int i = 0; i < cards.Count; i++)
             {
@@ -39,7 +40,7 @@ namespace MemoryMatchGame
             }
         }
 
-        void CreateCardObjects()
+        private void CreateCardObjects()
         {
             foreach (Card card in cards)
             {
@@ -69,14 +70,14 @@ namespace MemoryMatchGame
             }
         }
 
-        void UnflipCards()
+        private void UnflipCards()
         {
             firstCard.UnflipCard();
             secondCard.UnflipCard();
             ResetCards();
         }
 
-        void ResetCards()
+        private void ResetCards()
         {
             firstCard = null;
             secondCard = null;
