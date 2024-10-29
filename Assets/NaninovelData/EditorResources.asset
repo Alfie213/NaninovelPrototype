@@ -151,3 +151,13 @@ MonoBehaviour:
       guid: 289b41459bfaf7c47980ffe40d2eb21a
   - Id: Characters/bc28ad88-01a4-46a4-b88e-0335305c599f
     Resources: []
+  - Id: Backgrounds/e26d9ec1-6908-4b7c-bfe7-93e75c6d153d
+    Resources:
+    - name: autumn
+      pathPrefix: Backgrounds/MainBackground
+      guid: 0b2dd3846aace3b4e8fde5a0ce72b000
+    - name: rivermountain
+      pathPrefix: Backgrounds/MainBackground
+      guid: bbe11f35d280a8243ac58c8ae81525a7
+  - Id: CharacterAvatars
+    Resources: []

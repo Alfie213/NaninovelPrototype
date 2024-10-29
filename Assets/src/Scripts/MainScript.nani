@@ -1,4 +1,5 @@
 ; Введение и стартовый диалог
+@back autumn
 NpcA: Привет! Хочешь помочь мне с одним делом? Обещаю вознаграждение!
 @choice Согласиться помочь -> goto:.AcceptHelp
 @choice Отказаться -> goto:.AcceptHelp
@@ -15,5 +16,7 @@ NpcA: Отлично, вот твои первые 10 очков!
 @else
     NpcA: Не хватает очков. Попробуй еще раз!
 @endif
+
+@back rivermountain
 
 @stop
