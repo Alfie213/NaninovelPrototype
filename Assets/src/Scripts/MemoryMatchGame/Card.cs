@@ -27,12 +27,8 @@ namespace MemoryMatchGame
             this.backSprite = backSprite;
             this.frontSprite = frontSprite;
 
-            cardImage.sprite = this.backSprite;
-        }
-        
-        private void Awake()
-        {
             cardImage = GetComponent<Image>();
+            cardImage.sprite = this.backSprite;
         }
 
         public void FlipCard()

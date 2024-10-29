@@ -2,17 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace MemoryMatchGame
 {
     public class MemoryMatchGameManager : MonoBehaviour
     {
+        public UnityEvent OnGameEnd;
+        
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private Transform gridParent;
         [SerializeField] private int rows = 3;
         [SerializeField] private int columns = 3;
-        [SerializeField] private TextMeshProUGUI resultText;
 
         [Header("Card Sprites")]
         [SerializeField] private Sprite unknownSprite;
@@ -24,12 +26,12 @@ namespace MemoryMatchGame
         private readonly List<Card> cards = new();
         private Card firstCard, secondCard;
 
-        private void Start()
+        public void StartGame()
         {
             GenerateAndShuffleCards();
             SetupGridLayout();
         }
-
+        
         private void GenerateAndShuffleCards()
         {
             int totalCards = rows * columns;
@@ -97,6 +99,8 @@ namespace MemoryMatchGame
                 float cellHeight = rectTransform.rect.height / rows;
                 gridLayout.cellSize = new Vector2(cellWidth, cellHeight);
             }
+            
+            gridLayout.gameObject.SetActive(true);
         }
 
         private void OnCardClicked(Card clickedCard)
@@ -155,7 +159,8 @@ namespace MemoryMatchGame
             if (activeCards == 0 || (activeCards == 1 && cards.Count % 2 != 0))
             {
                 Debug.Log("Congratulations, you've found all pairs!");
-                resultText.text = "Congratulations, you've found all pairs!";
+                gridParent.gameObject.SetActive(false);
+                OnGameEnd?.Invoke();
             }
         }
     }

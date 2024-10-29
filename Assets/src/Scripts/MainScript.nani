@@ -18,12 +18,15 @@ NpcA: Отлично, вот твои первые 10 очков!
 @endif
 
 @back rivermountain
-NpcA: А вот и мини-игра!
+NpcB: А вот и мини-игра!
 
 ; Запуск мини-игры
-@minigame MemoryMatchGame
+@matchGame
 
 ; Действие после завершения мини-игры
 @back autumn
 NpcA: Поздравляю! Ты прошел мини-игру и заслужил еще награду!
+@addScore 20
+
+
 @stop
