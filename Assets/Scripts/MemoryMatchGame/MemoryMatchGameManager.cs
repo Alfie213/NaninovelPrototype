@@ -152,7 +152,6 @@ namespace MemoryMatchGame
             // Проверка, что либо все пары найдены, либо осталась одна активная карта (если количество карт нечетное)
             int activeCards = cards.Count(card => !card.IsFlipped);
 
-            Debug.Log(activeCards);
             if (activeCards == 0 || (activeCards == 1 && cards.Count % 2 != 0))
             {
                 Debug.Log("Поздравляем, вы нашли все пары!");
