@@ -14,6 +14,12 @@ namespace MemoryMatchGame
         [SerializeField] private int columns = 3;
         [SerializeField] private TextMeshProUGUI resultText;
 
+        [Header("Card Images")]
+        [SerializeField] private Sprite backSprite;
+        [SerializeField] private Sprite cowSprite;
+        [SerializeField] private Sprite chickenSprite;
+        [SerializeField] private Sprite bullSprite;
+
         private readonly List<Card> cards = new();
         private Card firstCard, secondCard;
 
@@ -50,7 +56,7 @@ namespace MemoryMatchGame
             foreach (var cardType in cardTypes)
             {
                 var card = Instantiate(cardPrefab, gridParent);
-                card.cardType = cardType;
+                card.CardType = cardType;
                 card.name = $"Card_{cardType}";
                 cards.Add(card);
 
@@ -58,6 +64,21 @@ namespace MemoryMatchGame
                 var button = card.GetComponent<Button>();
                 if (button != null)
                     button.onClick.AddListener(() => OnCardClicked(card));
+            }
+        }
+
+        private Sprite GetSpriteForCardType(CardType cardType)
+        {
+            switch (cardType)
+            {
+                case CardType.Cow:
+                    return cowSprite;
+                case CardType.Chicken:
+                    return chickenSprite;
+                case CardType.Bull:
+                    return bullSprite;
+                default:
+                    return null;
             }
         }
 
@@ -88,17 +109,14 @@ namespace MemoryMatchGame
                 secondCard = clickedCard;
                 secondCard.FlipCard();
 
-                // Проверка совпадения карт по типу
-                if (firstCard.cardType == secondCard.cardType)
+                if (firstCard.CardType == secondCard.CardType)
                 {
-                    Debug.Log($"Пара найдена: {firstCard.cardType}");
-
-                    // Отключаем кнопки для найденной пары
+                    Debug.Log($"Пара найдена: {firstCard.CardType}");
                     DisableCardButtons(firstCard);
                     DisableCardButtons(secondCard);
                     
                     ResetSelection();
-                    CheckForCompletion(); // Проверяем, завершена ли игра
+                    CheckForCompletion();
                 }
                 else
                 {
@@ -129,14 +147,13 @@ namespace MemoryMatchGame
 
         private void CheckForCompletion()
         {
-            // Проверка, что либо все карты отключены, либо осталась одна активная карта
+            // Проверка, что либо все пары найдены, либо осталась одна активная карта (если количество карт нечетное)
             int activeCards = cards.Count(card => card.GetComponent<Button>().interactable);
 
-            if (activeCards == 0 || (activeCards == 1 && cards.Count % 2 != 0)) // Если все пары найдены или осталась одна уникальная карта
+            if (activeCards == 0 || (activeCards == 1 && cards.Count % 2 != 0))
             {
                 resultText.text = "Поздравляем, вы нашли все пары!";
             }
         }
-
     }
 }

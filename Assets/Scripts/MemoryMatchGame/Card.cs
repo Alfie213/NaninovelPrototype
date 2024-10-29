@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,45 +9,40 @@ namespace MemoryMatchGame
         Chicken,
         Bull
     }
-    
+
     public class Card : MonoBehaviour
     {
-        public CardType cardType;
+        public CardType CardType { get; private set; }
         
-        [SerializeField] private Sprite backSprite;
-        [SerializeField] private Sprite frontSprite;
-
-        public bool IsFlipped { get; private set; }
-
+        private Sprite backSprite;
+        private Sprite frontSprite;
+        
         private Image cardImage;
+        
+        private bool isFlipped;
+
+        public void Initialize(CardType cardType, Sprite backSprite, Sprite frontSprite)
+        {
+            this.CardType = cardType;
+            this.backSprite = backSprite;
+            this.frontSprite = frontSprite;
+        }
         
         private void Awake()
         {
             cardImage = GetComponent<Image>();
         }
 
-        private void Start()
-        {
-            gameObject.GetComponentInChildren<TextMeshProUGUI>().text = cardType.ToString();
-        }
-
-        public void OnCardClicked()
-        {
-            if (IsFlipped) return;
-
-            FlipCard();
-        }
-
         public void FlipCard()
         {
-            IsFlipped = true;
-            cardImage.sprite = frontSprite;
+            isFlipped = true;
+            cardImage.sprite = backSprite;
         }
 
         public void UnflipCard()
         {
-            IsFlipped = false;
-            cardImage.sprite = backSprite;
+            isFlipped = false;
+            cardImage.sprite = frontSprite;
         }
     }
 }
